@@ -1,0 +1,45 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  place-content: space-evenly;
+  min-width: 20rem;
+  border: solid 1px #474747;
+}
+
+.submitButton {
+  width: 18rem;
+  display: inline-block;
+  padding: 0.5rem;
+  border: 0.1rem solid #ffffff;
+  margin: 1rem 0;
+  border-radius: 0.12rem;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  color: #ffffff;
+  background: none;
+  text-align: center;
+  transition: all 0.2s;
+}
+.submitButton:hover:enabled {
+  color: #000000;
+  background-color: #ffffff;
+}
+.submitButton:focus,
+.submitButton:visited {
+  outline: none;
+}
+
+.submitButtonDisabled {
+  background: #474747;
+  border: 0.1rem solid #666666;
+  color: #666666;
+}
+
+@media all and (max-width: 30rem) {
+  .submitButton {
+    display: block;
+    margin: 0.5rem auto;
+  }
+}
