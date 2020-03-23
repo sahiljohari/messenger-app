@@ -7,14 +7,14 @@ import TextInput from "../common/TextInput/TextInput";
 import { clientUrls } from "../../clientUrls";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [userName, setUserName] = useState("");
   const [chatRoom, setChatRoom] = useState("");
 
   const formComponents = [
     {
-      value: username,
-      placeholder: "Enter username",
-      onChange: e => setUsername(e.target.value)
+      value: userName,
+      placeholder: "Enter user name",
+      onChange: e => setUserName(e.target.value)
     },
     {
       value: chatRoom,
@@ -32,19 +32,17 @@ const Login = () => {
   };
 
   const clearForm = () => {
-    setUsername("");
+    setUserName("");
     setChatRoom("");
   };
 
-  const isValid = !!username && !!chatRoom;
+  const isValid = !!userName && !!chatRoom;
 
   return (
     <div className={styles.root}>
       <>
         {renderForm(formComponents)}
-        <Link
-          to={`${clientUrls.chat}?username=${username}&chatroom=${chatRoom}`}
-        >
+        <Link to={`${clientUrls.chat}?name=${userName}&room=${chatRoom}`}>
           <button
             onClick={clearForm}
             disabled={!isValid}
