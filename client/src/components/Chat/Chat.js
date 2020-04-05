@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import queryString from "query-string";
 import io from "socket.io-client";
+import { ChatProvider } from "../ChatContext/ChatContext";
 
 let socket;
 
@@ -21,7 +22,11 @@ const Chat = ({ location }) => {
     setUserName(name);
     setChatRoom(room);
 
-    socket.emit("join", { name, room }, () => {});
+    socket.emit("join", { name, room }, (error) => {
+      if (error) {
+        alert(error);
+      }
+    });
 
     return () => {
       socket.emit("disconnect");
@@ -31,7 +36,7 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     socket.on("message", ({ user, text }) => {
-      setMessages(messages => [...messages, { user, text }]);
+      setMessages((messages) => [...messages, { user, text }]);
     });
 
     socket.on("roomData", ({ users }) => {
@@ -39,7 +44,7 @@ const Chat = ({ location }) => {
     });
   }, []);
 
-  const sendMessage = e => {
+  const sendMessage = (e) => {
     e.preventDefault();
 
     if (message) {
@@ -47,7 +52,39 @@ const Chat = ({ location }) => {
     }
   };
 
-  return <></>;
+  const handleChange = (e) => {
+    setMessage(e.target.value);
+  };
+
+  const chatContextValues = useMemo(
+    () => ({
+      users,
+      chatRoom,
+      message,
+      setMessage,
+      messages,
+      setMessages,
+      sendMessage,
+    }),
+    [users, chatRoom, message, setMessage, messages, setMessages, sendMessage]
+  );
+
+  // This component will render the following components:
+  //   - InfoBar
+  //   - Messages
+  //   - Input Field
+  //   - TextContainer
+  return (
+    <ChatProvider values={chatContextValues}>
+      <>
+        <input
+          value={message}
+          onChange={handleChange}
+          onKeyPress={(e) => (e.key === "Enter" ? sendMessage(e) : null)}
+        />
+      </>
+    </ChatProvider>
+  );
 };
 
 export default Chat;
