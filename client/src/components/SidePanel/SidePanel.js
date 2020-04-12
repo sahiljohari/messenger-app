@@ -22,7 +22,7 @@ const SidePanel = () => {
         ))}
       </div>
       <div className={styles.panelFooter}>
-        <Link to={clientUrls.root}>{messages.panel_footer.defaultMessage}</Link>
+        <a href={clientUrls.logout}>{messages.panel_footer.defaultMessage}</a>
       </div>
     </div>
   );

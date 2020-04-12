@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
         users: getUsersInRoom(chatRoom),
       });
     }
-    console.log("Client disconnected");
+    console.log("Client has disconnected");
   });
 });
 
