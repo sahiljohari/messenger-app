@@ -4,6 +4,7 @@
   place-content: space-evenly;
   min-width: 20rem;
   border: solid 1px #474747;
+  background-color: #1c1c1c;
 }
 
 .submitButton {

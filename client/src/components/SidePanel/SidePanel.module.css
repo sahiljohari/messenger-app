@@ -1,0 +1,30 @@
+.root {
+  min-width: 16rem;
+  background-color: #fafafa;
+  position: relative;
+}
+
+.panelHeader {
+  padding: 1rem;
+  font-size: 1.25rem;
+  background-color: #e54511;
+  color: #ffffff;
+}
+
+.panelListItem {
+  margin: 1rem;
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 2px 24px rgba(0, 0, 0, 0.05);
+}
+
+.panelFooter {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  padding: 1rem 0;
+  margin: auto;
+  background: #c7c7c7;
+}

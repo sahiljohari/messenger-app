@@ -5,7 +5,7 @@ const addUser = ({ id, name, room }) => {
   room = room.trim().toLowerCase();
 
   const isExistingUser = users.find(
-    user => user.room === room && user.name === name
+    (user) => user.room === room && user.name === name
   );
 
   if (!name || !room) return { error: "User name and room are required." };
@@ -18,8 +18,8 @@ const addUser = ({ id, name, room }) => {
   return { newUser: { id, name, room } };
 };
 
-const removeUser = id => {
-  const userIndex = users.findIndex(user => user.id === id);
+const removeUser = (id) => {
+  const userIndex = users.findIndex((user) => user.id === id);
 
   if (userIndex === -1) {
     return { error: "User not found" };
@@ -28,13 +28,13 @@ const removeUser = id => {
   return users.splice(userIndex, 1)[0];
 };
 
-const getUser = id => users.find(user => user.id === id);
+const getUser = (id) => users.find((user) => user.id === id);
 
-const getUsersInRoom = room => users.filter(user => user.room === room);
+const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
 module.exports = {
   addUser,
   removeUser,
   getUser,
-  getUsersInRoom
+  getUsersInRoom,
 };

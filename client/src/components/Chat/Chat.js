@@ -1,20 +1,25 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import queryString from "query-string";
 import io from "socket.io-client";
+import styles from "./Chat.module.css";
 import { ChatProvider } from "../ChatContext/ChatContext";
+import SidePanel from "../SidePanel/SidePanel";
+import ChatContainer from "../ChatContainer/ChatContainer";
 
 let socket;
 
 const Chat = ({ location }) => {
   const [userName, setUserName] = useState("");
   const [chatRoom, setChatRoom] = useState("");
+  const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
-  const [users, setUsers] = useState("");
   const [messages, setMessages] = useState([]);
 
   const ENDPOINT = "localhost:5000";
 
-  const { name, room } = queryString.parse(location.search);
+  const { name, room } = queryString.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -44,45 +49,35 @@ const Chat = ({ location }) => {
     });
   }, []);
 
-  const sendMessage = (e) => {
+  const sendMessage = useCallback((e, message) => {
     e.preventDefault();
 
     if (message) {
-      socket.emit("sendMessage", message, () => setMessage(""));
+      socket.emit("sendMessage", message, () => setMessage(message));
     }
-  };
+  }, []);
 
-  const handleChange = (e) => {
-    setMessage(e.target.value);
-  };
+  console.log("messages", messages);
+  console.log("users", users);
 
   const chatContextValues = useMemo(
     () => ({
       users,
+      userName,
       chatRoom,
       message,
-      setMessage,
       messages,
-      setMessages,
       sendMessage,
     }),
-    [users, chatRoom, message, setMessage, messages, setMessages, sendMessage]
+    [users, userName, chatRoom, message, messages, sendMessage]
   );
 
-  // This component will render the following components:
-  //   - InfoBar
-  //   - Messages
-  //   - Input Field
-  //   - TextContainer
   return (
     <ChatProvider values={chatContextValues}>
-      <>
-        <input
-          value={message}
-          onChange={handleChange}
-          onKeyPress={(e) => (e.key === "Enter" ? sendMessage(e) : null)}
-        />
-      </>
+      <div className={styles.root}>
+        <SidePanel />
+        <ChatContainer />
+      </div>
     </ChatProvider>
   );
 };

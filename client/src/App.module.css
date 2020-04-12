@@ -1,8 +1,10 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed|Anton|Staatliches&display=swap");
+
 .root {
   display: flex;
   justify-content: center;
   text-align: center;
   align-items: center;
   height: 100vh;
-  background-color: #1c1c1c;
+  font-family: "Roboto Condensed", sans-serif;
 }

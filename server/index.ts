@@ -3,7 +3,7 @@ const router = require("./router");
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
 
-io.on("connect", (socket) => {
+io.on("connection", (socket) => {
   console.log("New client connected");
 
   socket.on("join", ({ name, room }, callback) => {
@@ -40,9 +40,11 @@ io.on("connect", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    const { name: userName, room: chatRoom } = removeUser(socket.id);
+    const removedUser = removeUser(socket.id);
 
-    if (!!userName && !!chatRoom) {
+    if (removedUser) {
+      const { name: userName, room: chatRoom } = removedUser;
+
       io.to(chatRoom).emit("message", {
         user: "admin",
         text: `${userName} has left`,
