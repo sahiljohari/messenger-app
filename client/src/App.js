@@ -11,7 +11,11 @@ const App = () => {
     <div className={styles.root}>
       <Router>
         <Switch>
-          <Route path={clientUrls.root} exact component={Login} />
+          <Route
+            path={[clientUrls.root, clientUrls.forbidden]}
+            exact
+            component={Login}
+          />
           <Route path={clientUrls.chat} exact component={Chat} />
           <Route path={clientUrls.logout} exact component={Logout} />
         </Switch>

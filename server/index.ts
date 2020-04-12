@@ -4,32 +4,31 @@ const router = require("./router");
 const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
 
 io.on("connection", (socket) => {
-  console.log("New client connected");
-
   socket.on("join", ({ name, room }, callback) => {
-    const {
-      error,
-      newUser: { name: userName, room: chatRoom },
-    } = addUser({ id: socket.id, name, room });
+    const { error, newUser } = addUser({ id: socket.id, name, room });
 
     if (error) return callback(error);
-    socket.join(chatRoom);
+    if (newUser) {
+      const { name: userName, room: chatRoom } = newUser;
+      socket.join(chatRoom);
 
-    socket.emit("message", {
-      user: "admin",
-      text: `${userName}, welcome to ${chatRoom}`,
-    });
-    socket.broadcast.to(chatRoom).emit("message", {
-      user: "admin",
-      text: `${userName} has joined the room`,
-    });
+      socket.emit("message", {
+        user: "chat master",
+        text: `${userName}, welcome to ${chatRoom}`,
+      });
+      socket.broadcast.to(chatRoom).emit("message", {
+        user: "chat master",
+        text: `${userName} has joined the room`,
+      });
 
-    io.to(chatRoom).emit("roomData", {
-      room: chatRoom,
-      users: getUsersInRoom(chatRoom),
-    });
+      io.to(chatRoom).emit("roomData", {
+        room: chatRoom,
+        users: getUsersInRoom(chatRoom),
+      });
 
-    callback();
+      callback();
+      console.log("New client connected");
+    }
   });
 
   socket.on("sendMessage", (message, callback) => {
@@ -46,15 +45,15 @@ io.on("connection", (socket) => {
       const { name: userName, room: chatRoom } = removedUser;
 
       io.to(chatRoom).emit("message", {
-        user: "admin",
-        text: `${userName} has left`,
+        user: "chat master",
+        text: `${userName} left`,
       });
       io.to(chatRoom).emit("roomData", {
         room: chatRoom,
         users: getUsersInRoom(chatRoom),
       });
+      console.log("Client has disconnected");
     }
-    console.log("Client has disconnected");
   });
 });
 

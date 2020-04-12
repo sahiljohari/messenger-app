@@ -38,6 +38,10 @@
   color: #666666;
 }
 
+.errorMessage {
+  color: #ff838d;
+}
+
 @media all and (max-width: 30rem) {
   .submitButton {
     display: block;

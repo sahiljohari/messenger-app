@@ -5,12 +5,21 @@ import MessageBubble from "../MessageBubble/MessageBubble";
 import styles from "./ChatContainer.module.css";
 
 const ChatContainer = () => {
-  const { userName, chatRoom, messages } = useContext(ChatContext);
-
+  const { userName, messages } = useContext(ChatContext);
   return (
     <div className={styles.root}>
-      [placeholder for ChatContainer component]
-      <MessageBubble />
+      {messages.map(({ user, text }, i) => {
+        const isFromNativeUser = user === userName;
+        return (
+          <MessageBubble
+            key={i}
+            user={user}
+            message={text}
+            isFromNativeUser={isFromNativeUser}
+          />
+        );
+      })}
+
       <ChatInputField />
     </div>
   );

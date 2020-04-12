@@ -1,4 +1,7 @@
 .root {
   width: inherit;
   border-left: 1px solid #1c1c1c;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }

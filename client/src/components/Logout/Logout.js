@@ -1,12 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import styles from "./Logout.module.css";
 import { clientUrls } from "../../clientUrls";
+import messages from "./messages";
 
 const Logout = () => {
   return (
-    <div>
-      <h2>You have successfully left the room.</h2>
-      <Link to={clientUrls.root}>Login again</Link>
+    <div className={styles.root}>
+      <h2>{messages.logout_message.defaultMessage}</h2>
+      <Link to={clientUrls.root}>
+        {messages.login_again_message.defaultMessage}
+      </Link>
     </div>
   );
 };

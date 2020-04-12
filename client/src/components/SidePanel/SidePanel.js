@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
 import { ChatContext } from "../ChatContext/ChatContext";
 import { clientUrls } from "../../clientUrls";
 import styles from "./SidePanel.module.css";
@@ -21,9 +20,11 @@ const SidePanel = () => {
           </div>
         ))}
       </div>
-      <div className={styles.panelFooter}>
-        <a href={clientUrls.logout}>{messages.panel_footer.defaultMessage}</a>
-      </div>
+      <a href={clientUrls.logout}>
+        <div className={styles.panelFooter}>
+          {messages.panel_footer.defaultMessage}
+        </div>
+      </a>
     </div>
   );
 };

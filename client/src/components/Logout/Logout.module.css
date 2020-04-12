@@ -1,0 +1,21 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.root a {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #e7e7e7;
+  background-color: #e7e7e7;
+  text-decoration: none;
+  color: #000000;
+  transition: all 0.4s;
+}
+
+.root a:hover {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #1c1c1c;
+}

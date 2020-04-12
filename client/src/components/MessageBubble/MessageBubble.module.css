@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 2px 24px rgba(0, 0, 0, 0.05);
+  border-radius: 0.5rem;
+  width: fit-content;
+  padding: 0.25rem 1rem;
+  margin: 0.5rem 1rem;
+  align-items: flex-end;
+  align-self: flex-end;
+}
+
+.nativeMessageBubble {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.userNameText {
+  margin: 0.1rem;
+  color: #666666;
+}
+
+.messageText {
+  margin: 0.1rem;
+}

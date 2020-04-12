@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { Redirect } from "react-router-dom";
 import queryString from "query-string";
 import io from "socket.io-client";
 import styles from "./Chat.module.css";
 import { ChatProvider } from "../ChatContext/ChatContext";
 import SidePanel from "../SidePanel/SidePanel";
 import ChatContainer from "../ChatContainer/ChatContainer";
+import { clientUrls } from "../../clientUrls";
 
 let socket;
 
@@ -15,21 +17,22 @@ const Chat = ({ location }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
+  const [hasError, setHasError] = useState(false);
+
   const ENDPOINT = "localhost:5000";
 
-  const { name, room } = queryString.parse(location.search, {
-    ignoreQueryPrefix: true,
-  });
-
   useEffect(() => {
+    const { name, room } = queryString.parse(location.search, {
+      ignoreQueryPrefix: true,
+    });
     socket = io(ENDPOINT);
 
     setUserName(name);
     setChatRoom(room);
 
     socket.emit("join", { name, room }, (error) => {
-      if (error) {
-        alert(error);
+      if (!!error) {
+        setHasError(true);
       }
     });
 
@@ -37,7 +40,7 @@ const Chat = ({ location }) => {
       socket.emit("disconnect");
       socket.off();
     };
-  }, [ENDPOINT, name, room]);
+  }, [ENDPOINT, location.search]);
 
   useEffect(() => {
     socket.on("message", ({ user, text }) => {
@@ -57,9 +60,6 @@ const Chat = ({ location }) => {
     }
   }, []);
 
-  console.log("messages", messages);
-  console.log("users", users);
-
   const chatContextValues = useMemo(
     () => ({
       users,
@@ -71,6 +71,10 @@ const Chat = ({ location }) => {
     }),
     [users, userName, chatRoom, message, messages, sendMessage]
   );
+
+  if (hasError) {
+    return <Redirect exact to={clientUrls.forbidden} />;
+  }
 
   return (
     <ChatProvider values={chatContextValues}>

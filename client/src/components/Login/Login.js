@@ -6,24 +6,26 @@ import styles from "./Login.module.css";
 import TextInput from "../common/TextInput/TextInput";
 import { clientUrls } from "../../clientUrls";
 
-const Login = () => {
+const Login = ({ location }) => {
   const [userName, setUserName] = useState("");
   const [chatRoom, setChatRoom] = useState("");
+
+  const { pathname } = location;
 
   const formComponents = [
     {
       value: userName,
       placeholder: "Enter user name",
-      onChange: e => setUserName(e.target.value)
+      onChange: (e) => setUserName(e.target.value),
     },
     {
       value: chatRoom,
       placeholder: "Enter the chat room name",
-      onChange: e => setChatRoom(e.target.value)
-    }
+      onChange: (e) => setChatRoom(e.target.value),
+    },
   ];
 
-  const renderForm = formComponentOptions => {
+  const renderForm = (formComponentOptions) => {
     return formComponentOptions.map((element, i) => {
       const { type, ...others } = element;
       const FormField = type ? type : TextInput;
@@ -56,6 +58,9 @@ const Login = () => {
             Sign In
           </button>
         </Link>
+        {pathname === clientUrls.forbidden && (
+          <p className={styles.errorMessage}>Username already in use</p>
+        )}
       </>
     </div>
   );

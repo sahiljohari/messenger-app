@@ -1,5 +1,7 @@
 import React, { useState, useContext } from "react";
 import { ChatContext } from "../ChatContext/ChatContext";
+import styles from "./ChatInputField.module.css";
+import messages from "./messages";
 
 const ChatInputField = () => {
   const { sendMessage } = useContext(ChatContext);
@@ -14,7 +16,17 @@ const ChatInputField = () => {
     setMessage("");
   };
 
-  return <div>[placeholder for ChatInputField component]</div>;
+  return (
+    <div className={styles.root}>
+      <input
+        className={styles.textInput}
+        value={message}
+        placeholder={messages.input_placeholder.defaultMessage}
+        onChange={handleChange}
+        onKeyPress={(e) => (e.key === "Enter" ? handleSend(e) : null)}
+      />
+    </div>
+  );
 };
 
 export default ChatInputField;
