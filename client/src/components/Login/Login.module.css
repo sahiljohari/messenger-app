@@ -4,28 +4,26 @@
   place-content: space-evenly;
   min-width: 20rem;
   border: solid 1px #474747;
-  background-color: #1c1c1c;
 }
 
 .submitButton {
   width: 18rem;
   display: inline-block;
   padding: 0.5rem;
-  border: 0.1rem solid #ffffff;
+  border: 0.05rem solid #2167ff;
   margin: 1rem 0;
   border-radius: 0.12rem;
   box-sizing: border-box;
   text-decoration: none;
   font-family: "Roboto", sans-serif;
   font-weight: 300;
-  color: #ffffff;
-  background: none;
+  background: #ffffff;
   text-align: center;
   transition: all 0.2s;
 }
 .submitButton:hover:enabled {
-  color: #000000;
-  background-color: #ffffff;
+  color: #ffffff;
+  background-color: #2167ff;
 }
 .submitButton:focus,
 .submitButton:visited {
@@ -33,9 +31,9 @@
 }
 
 .submitButtonDisabled {
-  background: #474747;
-  border: 0.1rem solid #666666;
-  color: #666666;
+  background: #666666;
+  border: 0.05rem solid #666666;
+  color: #cacaca;
 }
 
 .errorMessage {

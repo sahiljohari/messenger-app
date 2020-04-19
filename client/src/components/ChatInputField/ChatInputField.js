@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { InputGroup, FormControl, Button } from "react-bootstrap";
 import { ChatContext } from "../ChatContext/ChatContext";
 import styles from "./ChatInputField.module.css";
 import messages from "./messages";
@@ -17,15 +18,22 @@ const ChatInputField = () => {
   };
 
   return (
-    <div className={styles.root}>
-      <input
+    <InputGroup className={styles.root}>
+      <FormControl
         className={styles.textInput}
         value={message}
         placeholder={messages.input_placeholder.defaultMessage}
+        autoFocus
         onChange={handleChange}
         onKeyPress={(e) => (e.key === "Enter" ? handleSend(e) : null)}
       />
-    </div>
+      <InputGroup.Append>
+        <Button variant="outline-success" onClick={(e) => handleSend(e)}>
+          <i className="far fa-paper-plane"></i>
+          {messages.send_button_text.defaultMessage}
+        </Button>
+      </InputGroup.Append>
+    </InputGroup>
   );
 };
 

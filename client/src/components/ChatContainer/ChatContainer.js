@@ -2,13 +2,15 @@ import React, { useContext } from "react";
 import { ChatContext } from "../ChatContext/ChatContext";
 import ChatInputField from "../ChatInputField/ChatInputField";
 import MessageBubble from "../MessageBubble/MessageBubble";
+import InfoBar from "../InfoBar/InfoBar";
 import styles from "./ChatContainer.module.css";
 
 const ChatContainer = () => {
-  const { userName, messages } = useContext(ChatContext);
+  const { userName, messages: chatMessages } = useContext(ChatContext);
   return (
     <div className={styles.root}>
-      {messages.map(({ user, text }, i) => {
+      <InfoBar />
+      {chatMessages.map(({ user, text }, i) => {
         const isFromNativeUser = user === userName;
         return (
           <MessageBubble

@@ -1,5 +1,5 @@
 .root {
-  min-width: 16rem;
+  min-width: 12rem;
   background-color: #fafafa;
   position: relative;
 }
@@ -11,8 +11,8 @@
 
 .panelHeader {
   padding: 1rem;
-  font-size: 1.25rem;
-  background-color: #e57a11;
+  font-size: 1rem;
+  background-color: #45a600;
   color: #ffffff;
 }
 
