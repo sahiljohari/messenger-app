@@ -8,16 +8,20 @@
   margin: 0.5rem 1rem;
   align-items: flex-end;
   align-self: flex-end;
+  background-color: #fff4ae;
+  font-family: "Comic Neue", cursive;
 }
 
 .nativeMessageBubble {
   align-self: flex-start;
   align-items: flex-start;
+  background-color: #aee6ff;
 }
 
 .userNameText {
   margin: 0.1rem;
   color: #666666;
+  font-weight: 600;
 }
 
 .messageText {

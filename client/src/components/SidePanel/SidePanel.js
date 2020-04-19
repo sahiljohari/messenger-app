@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { ChatContext } from "../ChatContext/ChatContext";
-import { clientUrls } from "../../clientUrls";
 import styles from "./SidePanel.module.css";
 import messages from "./messages";
 import capitalize from "lodash/capitalize";
@@ -20,11 +19,6 @@ const SidePanel = () => {
           </div>
         ))}
       </div>
-      <a href={clientUrls.logout}>
-        <div className={styles.panelFooter}>
-          {messages.panel_footer.defaultMessage}
-        </div>
-      </a>
     </div>
   );
 };

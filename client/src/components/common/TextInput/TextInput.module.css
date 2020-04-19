@@ -1,7 +1,5 @@
 .root {
   margin: 1rem;
   padding: 1rem 1.25rem;
-  background: #474747;
-  border: none;
-  color: #c3c3c3;
+  border: 0.5px solid #666666;
 }
