@@ -1,6 +1,13 @@
-const users = [];
+export type User = {
+  id: string;
+  name: string;
+  room: string;
+  error?: string;
+};
 
-const addUser = ({ id, name, room }) => {
+const users: User[] = [];
+
+export const addUser = ({ id, name, room }: User) => {
   name = name.trim().toLowerCase();
   room = room.trim().toLowerCase();
 
@@ -18,23 +25,18 @@ const addUser = ({ id, name, room }) => {
   return { newUser: { id, name, room } };
 };
 
-const removeUser = (id) => {
+export const removeUser = (id: string) => {
   const userIndex = users.findIndex((user) => user.id === id);
 
   if (userIndex === -1) {
     return { error: "User not found" };
   }
 
-  return users.splice(userIndex, 1)[0];
+  return { removedUser: users.splice(userIndex, 1)[0] };
 };
 
-const getUser = (id) => users.find((user) => user.id === id);
+export const getUser = (id: string): User =>
+  users.find((user) => user.id === id);
 
-const getUsersInRoom = (room) => users.filter((user) => user.room === room);
-
-module.exports = {
-  addUser,
-  removeUser,
-  getUser,
-  getUsersInRoom,
-};
+export const getUsersInRoom = (room: string): User[] =>
+  users.filter((user) => user.room === room);

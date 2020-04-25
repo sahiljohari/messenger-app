@@ -1,9 +1,10 @@
-const { app, server, io, cors, PORT } = require("./setup");
-const router = require("./router");
+import express from "express";
+import router from "./router";
+import { app, server, io, cors, PORT } from "./setup";
+import { addUser, removeUser, getUser, getUsersInRoom } from "./users";
+import { Socket } from "socket.io";
 
-const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
-
-io.on("connection", (socket) => {
+io.on("connection", (socket: Socket) => {
   socket.on("join", ({ name, room }, callback) => {
     const { error, newUser } = addUser({ id: socket.id, name, room });
 
@@ -31,7 +32,7 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("sendMessage", (message, callback) => {
+  socket.on("sendMessage", (message: string, callback: () => void) => {
     const { name: userName, room: chatRoom } = getUser(socket.id);
 
     io.to(chatRoom).emit("message", { user: userName, text: message });
@@ -39,7 +40,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    const removedUser = removeUser(socket.id);
+    const { removedUser, error } = removeUser(socket.id);
 
     if (removedUser) {
       const { name: userName, room: chatRoom } = removedUser;
@@ -61,3 +62,34 @@ app.use(cors());
 app.use(router);
 
 server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
+
+const serverErrorHandler: express.ErrorRequestHandler = (err, _, res, __) => {
+  const { status = 500, ...others } = err;
+  res
+    .status(status)
+    .json({
+      status_code: status,
+      ...others,
+    })
+    .send();
+};
+
+app.use(serverErrorHandler);
+
+const closeServer = () => {
+  console.log("Closing http server");
+  server.close(() => {
+    console.log("Http server closed.");
+  });
+};
+
+process.on("SIGTERM", closeServer);
+process.on("SIGINT", closeServer);
+
+server.on("error", (e: NodeJS.ErrnoException) => {
+  if (e.code === "EADDRINUSE") {
+    console.error(`Port ${PORT} is already in use!`);
+    return;
+  }
+  console.error(e);
+});
