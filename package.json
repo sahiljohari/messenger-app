@@ -26,5 +26,16 @@
   },
   "dependencies": {
     "wsrun": "^5.2.0"
+  },
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "yarnhook": "^0.4.3"
+  },
+  "husky": {
+    "hooks": {
+      "post-checkout": "yarnhook",
+      "post-merge": "yarnhook",
+      "post-rewrite": "yarnhook"
+    }
   }
 }
