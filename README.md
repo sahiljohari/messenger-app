@@ -22,7 +22,7 @@ To-do
 - [ ] Implement "typing..." feature
 - [x] Redesign Login and LogOut component
 - [x] Create a wrapper around server code
-- [ ] Replace `npm` with `yarn`
+- [x] Replace `npm` with `yarn`
 - [x] Error handling in Server
 - [ ] Convert client and server to TypeScript
 - [ ] Implement Online indicator feature
