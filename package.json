@@ -1,0 +1,30 @@
+{
+  "name": "messenger-app",
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "version": "1.0,0",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start:all": "wsrun -m -e -p server client -c start",
+    "start": "yarn workspace client start",
+    "start:server": "yarn workspace server start",
+    "test": "yarn wsrun -m -e -p server client -c test",
+    "build:all": "yarn wsrun -m -e -p server client -c build",
+    "clean": "yarn wsrun -m -e -p server client -c clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sahiljohari/messenger-app"
+  },
+  "dependencies": {
+    "wsrun": "^5.2.0"
+  }
+}
