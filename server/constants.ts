@@ -4,3 +4,4 @@ export const MESSAGE = "message";
 export const ROOMSTATUS = "roomData";
 export const SENDMESSAGE = "sendMessage";
 export const DISCONNECT = "disconnect";
+export const ADMIN = "chat master";

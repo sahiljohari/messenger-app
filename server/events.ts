@@ -5,26 +5,32 @@ import {
   ROOMSTATUS,
   SENDMESSAGE,
   DISCONNECT,
+  ADMIN,
 } from "./constants";
 import { Socket } from "socket.io";
 import { io } from "./setup";
 import { addUser, removeUser, getUser, getUsersInRoom } from "./users";
 
-const emitMessage = (user, text, socket) => {
+const emitMessage = (user: string, text: string, socket: Socket) => {
   socket.emit(MESSAGE, {
     user,
     text,
   });
 };
 
-const broadcastMessage = (chatRoom, user, text, socket) => {
+const broadcastMessage = (
+  chatRoom: string,
+  user: string,
+  text: string,
+  socket: Socket
+) => {
   socket.broadcast.to(chatRoom).emit(MESSAGE, {
     user,
     text,
   });
 };
 
-const sendMessage = (socket) => {
+const sendMessage = (socket: Socket) => {
   socket.on(SENDMESSAGE, (message: string, callback: () => void) => {
     const { name: userName, room: chatRoom } = getUser(socket.id);
 
@@ -33,21 +39,21 @@ const sendMessage = (socket) => {
   });
 };
 
-const emitRoomStatus = (chatRoom) => {
+const emitRoomStatus = (chatRoom: string) => {
   io.to(chatRoom).emit(ROOMSTATUS, {
     room: chatRoom,
     users: getUsersInRoom(chatRoom),
   });
 };
 
-const emitMessageToRoom = (chatRoom, user, text) => {
+const emitMessageToRoom = (chatRoom: string, user: string, text: string) => {
   io.to(chatRoom).emit(MESSAGE, {
     user,
     text,
   });
 };
 
-const onJoin = (socket) => {
+const onJoin = (socket: Socket) => {
   socket.on(JOIN, ({ name, room }, callback) => {
     const { error, newUser } = addUser({ id: socket.id, name, room });
 
@@ -56,10 +62,10 @@ const onJoin = (socket) => {
     if (newUser) {
       const { name: userName, room: chatRoom } = newUser;
       socket.join(chatRoom);
-      emitMessage("chat master", `${userName}, welcome to ${chatRoom}`, socket);
+      emitMessage(ADMIN, `${userName}, welcome to ${chatRoom}`, socket);
       broadcastMessage(
         chatRoom,
-        "chat master",
+        ADMIN,
         `${userName} has joined the room`,
         socket
       );
@@ -72,14 +78,14 @@ const onJoin = (socket) => {
   });
 };
 
-const onDisconnect = (socket) => {
+const onDisconnect = (socket: Socket) => {
   socket.on(DISCONNECT, () => {
     const { removedUser, error } = removeUser(socket.id);
 
     if (removedUser) {
       const { name: userName, room: chatRoom } = removedUser;
 
-      emitMessageToRoom(chatRoom, "chat master", `${userName} left`);
+      emitMessageToRoom(chatRoom, ADMIN, `${userName} left`);
       emitRoomStatus(chatRoom);
       console.log("Client has disconnected");
     }
