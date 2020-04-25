@@ -1,5 +1,7 @@
 # messenger-app
 
+![messenger](demo.png)
+
 #### To run the application:
 
 Client:
