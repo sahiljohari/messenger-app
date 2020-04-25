@@ -4,15 +4,18 @@
   left: 0;
   width: inherit;
   padding: 0.25rem;
+  z-index: 999;
 }
 
 .textInput {
   width: inherit;
   height: 3.25rem;
   padding: 0.5rem;
+  background-color: #e7e7e7;
 }
 
 .textInput:focus {
   border: 1.5px solid #2aa846;
   box-shadow: none;
+  background-color: #ffffff;
 }

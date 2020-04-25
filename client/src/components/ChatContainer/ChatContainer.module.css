@@ -5,3 +5,44 @@
   flex-direction: column;
   position: relative;
 }
+
+.messages {
+  padding: 0.5rem 0.5rem 7rem;
+  overflow: auto;
+  flex: inherit;
+}
+
+.scrollView {
+  display: flex;
+  flex-direction: column;
+  transition: linear 0.5s;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollView::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+.scrollView {
+  -ms-overflow-style: none;
+}
+
+.followButton {
+  height: 26px;
+  width: 26px;
+  border-radius: 13px;
+  bottom: 4.5rem;
+  right: 1.5rem;
+  transition: ease-in-out 0.2s;
+}
+
+.followButton:hover {
+  background-color: #2aa846;
+}
+
+.followButton::after {
+  font-family: fontAwesome;
+  content: "\f078";
+  color: #ffffff;
+}
