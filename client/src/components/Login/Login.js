@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import cx from "classnames";
 import styles from "./Login.module.css";
-
 import TextInput from "../common/TextInput/TextInput";
+import Section from "../common/Section/Section";
 import { clientUrls } from "../../clientUrls";
+import messages from "./messages";
 
 const Login = ({ location }) => {
   const [userName, setUserName] = useState("");
@@ -15,6 +16,7 @@ const Login = ({ location }) => {
   const formComponents = [
     {
       value: userName,
+      autoFocus: true,
       placeholder: "Enter user name",
       onChange: (e) => setUserName(e.target.value),
     },
@@ -41,28 +43,31 @@ const Login = ({ location }) => {
   const isValid = !!userName && !!chatRoom;
 
   return (
-    <div className={styles.root}>
-      <>
-        {renderForm(formComponents)}
-        <Link to={`${clientUrls.chat}?name=${userName}&room=${chatRoom}`}>
-          <button
-            onClick={clearForm}
-            disabled={!isValid}
-            className={
-              isValid
-                ? styles.submitButton
-                : cx(styles.submitButton, styles.submitButtonDisabled)
-            }
-            type="submit"
-          >
-            Sign In
-          </button>
-        </Link>
-        {pathname === clientUrls.forbidden && (
-          <p className={styles.errorMessage}>Username already in use</p>
-        )}
-      </>
-    </div>
+    <Section
+      header={messages.login_header.defaultMessage}
+      className={styles.root}
+    >
+      {renderForm(formComponents)}
+      <Link to={`${clientUrls.chat}?name=${userName}&room=${chatRoom}`}>
+        <button
+          onClick={clearForm}
+          disabled={!isValid}
+          className={
+            isValid
+              ? styles.submitButton
+              : cx(styles.submitButton, styles.submitButtonDisabled)
+          }
+          type="submit"
+        >
+          {messages.submit_button_label.defaultMessage}
+        </button>
+      </Link>
+      {pathname === clientUrls.forbidden && (
+        <p className={styles.errorMessage}>
+          {messages.username_error_message.defaultMessage}
+        </p>
+      )}
+    </Section>
   );
 };
 

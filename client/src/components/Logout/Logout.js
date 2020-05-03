@@ -3,15 +3,18 @@ import { Link } from "react-router-dom";
 import styles from "./Logout.module.css";
 import { clientUrls } from "../../clientUrls";
 import messages from "./messages";
+import Section from "../common/Section/Section";
 
 const Logout = () => {
   return (
-    <div className={styles.root}>
-      <h2>{messages.logout_message.defaultMessage}</h2>
+    <Section
+      header={messages.logout_message.defaultMessage}
+      className={styles.root}
+    >
       <Link to={clientUrls.root}>
         {messages.login_again_message.defaultMessage}
       </Link>
-    </div>
+    </Section>
   );
 };
 

@@ -3,20 +3,26 @@
   flex-direction: column;
   place-content: space-evenly;
   min-width: 20rem;
-  border: solid 1px #474747;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 2px 24px rgba(0, 0, 0, 0.05);
+  padding: 4rem;
+}
+
+.root a:focus,
+a:visited {
+  outline: none;
 }
 
 .submitButton {
-  width: 18rem;
+  width: 20rem;
   display: inline-block;
-  padding: 0.5rem;
+  padding: 0.75rem;
   border: 0.05rem solid #2167ff;
   margin: 1rem 0;
   border-radius: 0.12rem;
   box-sizing: border-box;
   text-decoration: none;
-  font-family: "Roboto", sans-serif;
   font-weight: 300;
+  font-size: 1rem;
   background: #ffffff;
   text-align: center;
   transition: all 0.2s;
