@@ -28,7 +28,11 @@ const ChatInputField = () => {
         onKeyPress={(e) => (e.key === "Enter" ? handleSend(e) : null)}
       />
       <InputGroup.Append>
-        <Button variant="outline-secondary" onClick={(e) => handleSend(e)}>
+        <Button
+          variant="light"
+          onClick={(e) => handleSend(e)}
+          disabled={!message}
+        >
           <i className="far fa-paper-plane"></i>
           {messages.send_button_text.defaultMessage}
         </Button>

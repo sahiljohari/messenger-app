@@ -9,19 +9,25 @@
   align-items: flex-end;
   align-self: flex-end;
   background-color: #fff4ae;
-  font-family: "Comic Neue", cursive;
+  font-family: "PT Sans", sans-serif;
 }
 
-.nativeMessageBubble {
+.remoteMessageBubble {
   align-self: flex-start;
   align-items: flex-start;
   background-color: #aee6ff;
+  border-radius: 0rem;
+}
+
+.remoteUserMessageBubble {
+  align-self: flex-start;
+  align-items: flex-start;
+  background-color: #fafafa;
 }
 
 .userNameText {
   margin: 0.1rem;
-  color: #666666;
-  font-weight: 600;
+  color: #5c5c5c;
 }
 
 .messageText {

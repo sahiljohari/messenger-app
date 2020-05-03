@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital@0;1&display=swap");
 
 .root {
   display: flex;
@@ -10,4 +10,10 @@
   font-family: "IBM Plex Sans Condensed", sans-serif;
   background-color: #ffffff;
   padding: 2rem 4rem 0 4rem;
+}
+
+@media screen and (max-width: 768px) {
+  .root {
+    padding: 2rem 1rem 0;
+  }
 }

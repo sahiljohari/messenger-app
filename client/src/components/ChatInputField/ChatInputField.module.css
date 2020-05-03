@@ -15,7 +15,7 @@
 }
 
 .textInput:focus {
-  border: 1.5px solid #2aa846;
+  border: 1.5px solid #f8f9fa;
   box-shadow: none;
   background-color: #ffffff;
 }
