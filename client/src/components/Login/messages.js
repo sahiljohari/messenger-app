@@ -3,7 +3,7 @@ const messages = {
     defaultMessage: "Sign in to Chat-Pad",
   },
   submit_button_label: {
-    defaultMessage: "Let's begin!",
+    defaultMessage: "Proceed",
   },
   username_error_message: {
     defaultMessage: "Username already in use",

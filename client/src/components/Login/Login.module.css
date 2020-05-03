@@ -13,11 +13,12 @@ a:visited {
 }
 
 .submitButton {
-  width: 20rem;
+  width: 8rem;
   display: inline-block;
-  padding: 0.75rem;
-  border: 0.05rem solid #2167ff;
-  margin: 1rem 0;
+  padding: 1rem 1.25rem;
+  border: 0.05rem solid #474e56;
+  color: #474e56;
+  margin: 1rem;
   border-radius: 0.12rem;
   box-sizing: border-box;
   text-decoration: none;
@@ -25,11 +26,11 @@ a:visited {
   font-size: 1rem;
   background: #ffffff;
   text-align: center;
-  transition: all 0.2s;
+  transition: all 0.1s;
 }
 .submitButton:hover:enabled {
   color: #ffffff;
-  background-color: #2167ff;
+  background-color: #474e56;
 }
 .submitButton:focus,
 .submitButton:visited {
@@ -42,6 +43,11 @@ a:visited {
   color: #cacaca;
 }
 
+.submitButton i {
+  font-size: 2rem;
+  vertical-align: middle;
+}
+
 .errorMessage {
   color: #ff838d;
 }
@@ -52,3 +58,9 @@ a:visited {
     margin: 0.5rem auto;
   }
 }
+
+/* @media screen and (max-width: 1120px) {
+  .root {
+    display: none;
+  }
+} */

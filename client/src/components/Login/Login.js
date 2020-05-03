@@ -46,6 +46,7 @@ const Login = ({ location }) => {
     <Section
       header={messages.login_header.defaultMessage}
       className={styles.root}
+      hasFormContent={true}
     >
       {renderForm(formComponents)}
       <Link to={`${clientUrls.chat}?name=${userName}&room=${chatRoom}`}>
@@ -59,7 +60,7 @@ const Login = ({ location }) => {
           }
           type="submit"
         >
-          {messages.submit_button_label.defaultMessage}
+          <i className="far fa-arrow-alt-circle-right"></i>
         </button>
       </Link>
       {pathname === clientUrls.forbidden && (
