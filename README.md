@@ -4,8 +4,9 @@ A simple messenger app built using [socket-io](https://socket.io/) library.
 
 #### Tech-stack:
 
-- React.js
-- Node.js
+- React.js [Client]
+- Node.js [Server]
+- Typescript [Server]
 
 ![messenger](demo.png)
 
@@ -21,12 +22,17 @@ A simple messenger app built using [socket-io](https://socket.io/) library.
 - [x] Style the input text field
 - [x] Implement scroll-to-bottom feature
 - [ ] Implement "typing..." feature
-- [x] Redesign Login and LogOut component
+- [ ] Introduce Toast notifications
+- [ ] Pass credentials as props instead of query string parameters
+- [ ] Redesign Login and LogOut component
 - [x] Create a wrapper around server code
 - [x] Replace `npm` with `yarn`
 - [x] Error handling in Server
-- [ ] Convert client and server to TypeScript
+- [ ] Convert client to TypeScript
 - [ ] Implement Online indicator feature
+- [ ] Invite friends feature
+- [ ] Emojis feature
+- [ ] Deploy v1 app on a cloud platform
 
 #### Want to contribute?
 
