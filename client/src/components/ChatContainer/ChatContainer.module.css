@@ -1,14 +1,13 @@
 .root {
   width: inherit;
-  border-left: 1px solid #ffffff;
   display: flex;
   flex-direction: column;
   position: relative;
-  background-color: #474e56;
+  background-color: #343a40;
 }
 
 .messages {
-  padding: 0.5rem 0.5rem 7rem;
+  padding: 1.5rem 1.5rem 7rem;
   overflow: auto;
   flex: inherit;
 }

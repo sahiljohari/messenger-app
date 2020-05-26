@@ -10,7 +10,7 @@ const MessageBubble = ({ user, message, isFromNativeUser }) => {
       : cx(styles.root, styles.remoteMessageBubble);
 
   const bubbleStyle = isFromNativeUser
-    ? styles.root
+    ? cx(styles.root, styles.userMessageBubble)
     : cx(styles.root, remoteBubbleStyle);
 
   const userNameOnBubble = isFromNativeUser ? "You" : capitalize(user);

@@ -1,6 +1,6 @@
 .root {
   min-width: 12rem;
-  background-color: #fafafa;
+  background-color: #474e56;
   position: relative;
   overflow-y: scroll;
 }
@@ -22,8 +22,10 @@
 
 .panelHeader {
   padding: 1rem;
+  margin: 0 0 1rem 0;
   font-size: 1rem;
-  background-color: #45a600;
+  height: 3.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 2px 24px rgba(0, 0, 0, 0.1);
   color: #ffffff;
 }
 
@@ -31,9 +33,8 @@
   display: flex;
   flex-direction: row;
   margin: 0.5rem 0;
-  background-color: #ffffff;
+  background-color: #f0f0f0;
   padding: 0.5rem 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 2px 24px rgba(0, 0, 0, 0.05);
 }
 
 .panelListItem > i {
