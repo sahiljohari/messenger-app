@@ -16,6 +16,8 @@ const Chat = ({ location }) => {
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const [typer, setTyper] = useState("");
 
   const [hasError, setHasError] = useState(false);
 
@@ -50,7 +52,19 @@ const Chat = ({ location }) => {
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
+
+    socket.on("userTyping", ({ user, typing }) => {
+      setTyper(user);
+      setIsTyping(typing);
+    });
   }, []);
+
+  const sendTypingStatus = useCallback(
+    (isTyping) => {
+      socket.emit("typing", { user: userName, chatRoom, typing: isTyping });
+    },
+    [userName, chatRoom]
+  );
 
   const sendMessage = useCallback((e, message) => {
     e.preventDefault();
@@ -67,9 +81,22 @@ const Chat = ({ location }) => {
       chatRoom,
       message,
       messages,
+      typer,
+      isTyping,
       sendMessage,
+      sendTypingStatus,
     }),
-    [users, userName, chatRoom, message, messages, sendMessage]
+    [
+      users,
+      userName,
+      chatRoom,
+      message,
+      messages,
+      typer,
+      isTyping,
+      sendMessage,
+      sendTypingStatus,
+    ]
   );
 
   if (hasError) {

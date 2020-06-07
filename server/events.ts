@@ -4,6 +4,8 @@ import {
   MESSAGE,
   ROOMSTATUS,
   SENDMESSAGE,
+  TYPING,
+  TYPINGSTATUS,
   DISCONNECT,
   ADMIN,
 } from "./constants";
@@ -27,6 +29,13 @@ const broadcastMessage = (
   socket.broadcast.to(chatRoom).emit(MESSAGE, {
     user,
     text,
+  });
+};
+
+const typingStatus = (socket: Socket) => {
+  socket.on(TYPING, (data) => {
+    const { user, chatRoom, typing } = data;
+    socket.broadcast.to(chatRoom).emit(TYPINGSTATUS, { user, typing });
   });
 };
 
@@ -95,6 +104,7 @@ const onDisconnect = (socket: Socket) => {
 const onConnection = () => {
   io.on(CONNECTION, (socket: Socket) => {
     onJoin(socket);
+    typingStatus(socket);
     sendMessage(socket);
     onDisconnect(socket);
   });
