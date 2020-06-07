@@ -15,7 +15,8 @@ const SidePanel = () => {
       <div>
         {users.map(({ name }, i) => (
           <div key={i} className={styles.panelListItem}>
-            {capitalize(name)}
+            <i className="fas fa-user-circle"></i>
+            <p className={styles.userName}>{capitalize(name)}</p>
           </div>
         ))}
       </div>

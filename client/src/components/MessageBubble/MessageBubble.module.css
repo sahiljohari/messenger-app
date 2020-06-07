@@ -1,29 +1,61 @@
 .root {
+  position: relative;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 2px 24px rgba(0, 0, 0, 0.05);
-  border-radius: 0.5rem;
   width: fit-content;
   padding: 0.25rem 1rem;
   margin: 0.5rem 0.25rem;
-  align-items: flex-end;
-  align-self: flex-end;
-  background-color: #fff4ae;
-  font-family: "Comic Neue", cursive;
+  background-color: transparent;
+  font-family: "PT Sans", sans-serif;
 }
 
-.nativeMessageBubble {
+.userMessageBubble {
+  align-items: flex-end;
+  align-self: flex-end;
+}
+.userMessageBubble::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 0;
+  height: 2.8rem;
+  width: 4px;
+  background-color: #e4cd66;
+}
+
+.remoteMessageBubble {
   align-self: flex-start;
   align-items: flex-start;
   background-color: #aee6ff;
+  border-radius: 0rem;
+}
+
+.remoteMessageBubble p {
+  color: #353535;
+}
+
+.remoteUserMessageBubble {
+  align-self: flex-start;
+  align-items: flex-start;
+  background-color: transparent;
+}
+
+.remoteUserMessageBubble::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 0;
+  height: 2.8rem;
+  width: 4px;
+  background-color: #fafafa;
 }
 
 .userNameText {
   margin: 0.1rem;
-  color: #666666;
-  font-weight: 600;
+  color: #b3b6b8;
 }
 
 .messageText {
   margin: 0.1rem;
+  color: #f0f0f0;
 }
