@@ -5,9 +5,13 @@ import styles from "./ChatInputField.module.css";
 import messages from "./messages";
 
 const ChatInputField = () => {
-  const { typer, isTyping, sendMessage, sendTypingStatus } = useContext(
-    ChatContext
-  );
+  const {
+    typer,
+    numTypers,
+    isTyping,
+    sendMessage,
+    sendTypingStatus,
+  } = useContext(ChatContext);
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
@@ -20,7 +24,7 @@ const ChatInputField = () => {
     sendTypingStatus(false);
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyUp = (e) => {
     if (e.key !== "Enter" && e.target.value !== "") {
       sendTypingStatus(true);
     } else {
@@ -28,11 +32,12 @@ const ChatInputField = () => {
     }
   };
 
+  const typingMessage =
+    numTypers > 1 ? "Several people are typing..." : `${typer} is typing...`;
+
   return (
     <div className={styles.root}>
-      {isTyping && (
-        <p className={styles.typingIndicator}>{typer} is typing...</p>
-      )}
+      {isTyping && <p className={styles.typingIndicator}>{typingMessage}</p>}
       <InputGroup className={styles.inputGroup}>
         <FormControl
           className={styles.textInput}
@@ -41,7 +46,7 @@ const ChatInputField = () => {
           autoFocus
           onChange={handleChange}
           onKeyPress={(e) => (e.key === "Enter" ? handleSend(e) : null)}
-          onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyUp}
         />
         <InputGroup.Append>
           <Button

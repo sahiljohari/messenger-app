@@ -13,6 +13,20 @@ import { Socket } from "socket.io";
 import { io } from "./setup";
 import { addUser, removeUser, getUser, getUsersInRoom } from "./users";
 
+const typers: { [key: string]: boolean } = {};
+
+// Helper functions
+const getNumTypers = (socketId: string, typers: { [key: string]: boolean }) => {
+  let numTypers = 0;
+  Object.keys(typers).forEach((key) => {
+    if (key !== socketId && typers[key] === true) {
+      numTypers++;
+    }
+  });
+  return numTypers;
+};
+
+// Send a message out to the client
 const emitMessage = (user: string, text: string, socket: Socket) => {
   socket.emit(MESSAGE, {
     user,
@@ -20,6 +34,7 @@ const emitMessage = (user: string, text: string, socket: Socket) => {
   });
 };
 
+// Send out a message to all the users in room except the origin user
 const broadcastMessage = (
   chatRoom: string,
   user: string,
@@ -32,22 +47,7 @@ const broadcastMessage = (
   });
 };
 
-const typingStatus = (socket: Socket) => {
-  socket.on(TYPING, (data) => {
-    const { user, chatRoom, typing } = data;
-    socket.broadcast.to(chatRoom).emit(TYPINGSTATUS, { user, typing });
-  });
-};
-
-const sendMessage = (socket: Socket) => {
-  socket.on(SENDMESSAGE, (message: string, callback: () => void) => {
-    const { name: userName, room: chatRoom } = getUser(socket.id);
-
-    emitMessageToRoom(chatRoom, userName, message);
-    callback();
-  });
-};
-
+//Send out data about number of users in room to every user
 const emitRoomStatus = (chatRoom: string) => {
   io.to(chatRoom).emit(ROOMSTATUS, {
     room: chatRoom,
@@ -55,10 +55,39 @@ const emitRoomStatus = (chatRoom: string) => {
   });
 };
 
+// Send a message to everyone in the room
 const emitMessageToRoom = (chatRoom: string, user: string, text: string) => {
   io.to(chatRoom).emit(MESSAGE, {
     user,
     text,
+  });
+};
+
+// Socket wrapper functions
+
+// Send typing data to every user in the room except the origin user
+const typingStatus = (socket: Socket) => {
+  socket.on(
+    TYPING,
+    (data: { user: string; chatRoom: string; typing: boolean }) => {
+      const { user, chatRoom, typing } = data;
+      typers[socket.id] = typing;
+      socket.broadcast.to(chatRoom).emit(TYPINGSTATUS, {
+        user,
+        typing,
+        numTypers: getNumTypers(socket.id, typers),
+      });
+    }
+  );
+};
+
+// Wrapper to send a message to everyone in the room along with origin user data
+const sendMessage = (socket: Socket) => {
+  socket.on(SENDMESSAGE, (message: string, callback: () => void) => {
+    const { name: userName, room: chatRoom } = getUser(socket.id);
+
+    emitMessageToRoom(chatRoom, userName, message);
+    callback();
   });
 };
 
@@ -96,6 +125,7 @@ const onDisconnect = (socket: Socket) => {
 
       emitMessageToRoom(chatRoom, ADMIN, `${userName} left`);
       emitRoomStatus(chatRoom);
+      typingStatus(socket);
       console.log("Client has disconnected");
     }
   });

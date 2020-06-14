@@ -18,6 +18,7 @@ const Chat = ({ location }) => {
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const [typer, setTyper] = useState("");
+  const [numTypers, setNumTypers] = useState(0);
 
   const [hasError, setHasError] = useState(false);
 
@@ -53,9 +54,10 @@ const Chat = ({ location }) => {
       setUsers(users);
     });
 
-    socket.on("userTyping", ({ user, typing }) => {
+    socket.on("userTyping", ({ user, typing, numTypers }) => {
       setTyper(user);
       setIsTyping(typing);
+      setNumTypers(numTypers);
     });
   }, []);
 
@@ -82,6 +84,7 @@ const Chat = ({ location }) => {
       message,
       messages,
       typer,
+      numTypers,
       isTyping,
       sendMessage,
       sendTypingStatus,
@@ -93,6 +96,7 @@ const Chat = ({ location }) => {
       message,
       messages,
       typer,
+      numTypers,
       isTyping,
       sendMessage,
       sendTypingStatus,
