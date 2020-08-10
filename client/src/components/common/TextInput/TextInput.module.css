@@ -1,5 +1,8 @@
 .root {
   margin: 1rem;
-  padding: 1rem 1.25rem;
+  padding: 1.25rem;
   border: 0.5px solid #666666;
+  width: 20rem;
+  font-size: 1rem;
+  vertical-align: middle;
 }
