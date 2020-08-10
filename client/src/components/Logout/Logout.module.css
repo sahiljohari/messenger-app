@@ -12,10 +12,15 @@
   text-decoration: none;
   color: #000000;
   transition: all 0.4s;
+  width: 100%;
 }
 
 .root a:hover {
   background: #ffffff;
   color: #000000;
   border: 1px solid #1c1c1c;
+}
+
+.root a:focus {
+  outline: none;
 }
