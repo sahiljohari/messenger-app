@@ -11,20 +11,14 @@ import {
 } from "./constants";
 import { Socket } from "socket.io";
 import { io } from "./setup";
-import { addUser, removeUser, getUser, getUsersInRoom } from "./users";
-
-const typers: { [key: string]: boolean } = {};
-
-// Helper functions
-const getNumTypers = (socketId: string, typers: { [key: string]: boolean }) => {
-  let numTypers = 0;
-  Object.keys(typers).forEach((key) => {
-    if (key !== socketId && typers[key] === true) {
-      numTypers++;
-    }
-  });
-  return numTypers;
-};
+import {
+  addUser,
+  removeUser,
+  getUser,
+  getUsersInRoom,
+  getTypingUsers,
+  setTypingUser,
+} from "./users";
 
 // Send a message out to the client
 const emitMessage = (user: string, text: string, socket: Socket) => {
@@ -44,6 +38,17 @@ const broadcastMessage = (
   socket.broadcast.to(chatRoom).emit(MESSAGE, {
     user,
     text,
+  });
+};
+
+// Send out typing indicator message to all users in room except sender
+const broadcastTypingMessage = (
+  socket: Socket,
+  chatRoom: string,
+  typingIndicatorMessage: string
+) => {
+  socket.broadcast.to(chatRoom).emit(TYPINGSTATUS, {
+    typingMessage: typingIndicatorMessage,
   });
 };
 
@@ -71,12 +76,21 @@ const typingStatus = (socket: Socket) => {
     TYPING,
     (data: { user: string; chatRoom: string; typing: boolean }) => {
       const { user, chatRoom, typing } = data;
-      typers[socket.id] = typing;
-      socket.broadcast.to(chatRoom).emit(TYPINGSTATUS, {
-        user,
-        typing,
-        numTypers: getNumTypers(socket.id, typers),
-      });
+      setTypingUser(socket.id, typing);
+
+      // Get total number of users that are typing other than myself
+      const typers = getTypingUsers(socket.id);
+      let typingIndicatorMessage: string;
+
+      if (typers.length >= 2) {
+        typingIndicatorMessage = "Several people are typing...";
+      } else if (!typing) {
+        typingIndicatorMessage = "";
+      } else {
+        typingIndicatorMessage = `${user} is typing...`;
+      }
+
+      broadcastTypingMessage(socket, chatRoom, typingIndicatorMessage);
     }
   );
 };
@@ -92,8 +106,8 @@ const sendMessage = (socket: Socket) => {
 };
 
 const onJoin = (socket: Socket) => {
-  socket.on(JOIN, ({ name, room }, callback) => {
-    const { error, newUser } = addUser({ id: socket.id, name, room });
+  socket.on(JOIN, ({ name, room, isTyping }, callback) => {
+    const { error, newUser } = addUser({ id: socket.id, name, room, isTyping });
 
     if (error) return callback(error);
 
@@ -125,7 +139,7 @@ const onDisconnect = (socket: Socket) => {
 
       emitMessageToRoom(chatRoom, ADMIN, `${userName} left`);
       emitRoomStatus(chatRoom);
-      typingStatus(socket);
+      broadcastTypingMessage(socket, chatRoom, "");
       console.log("Client has disconnected");
     }
   });

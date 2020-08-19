@@ -5,13 +5,9 @@ import styles from "./ChatInputField.module.css";
 import messages from "./messages";
 
 const ChatInputField = () => {
-  const {
-    typer,
-    numTypers,
-    isTyping,
-    sendMessage,
-    sendTypingStatus,
-  } = useContext(ChatContext);
+  const { typingMessage, sendMessage, sendTypingStatus } = useContext(
+    ChatContext
+  );
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
@@ -25,19 +21,12 @@ const ChatInputField = () => {
   };
 
   const handleKeyUp = (e) => {
-    if (e.key !== "Enter" && e.target.value !== "") {
-      sendTypingStatus(true);
-    } else {
-      sendTypingStatus(false);
-    }
+    sendTypingStatus(e.key !== "Enter" && e.target.value !== "");
   };
-
-  const typingMessage =
-    numTypers > 1 ? "Several people are typing..." : `${typer} is typing...`;
 
   return (
     <div className={styles.root}>
-      {isTyping && <p className={styles.typingIndicator}>{typingMessage}</p>}
+      <p className={styles.typingIndicator}>{typingMessage}</p>
       <InputGroup className={styles.inputGroup}>
         <FormControl
           className={styles.textInput}

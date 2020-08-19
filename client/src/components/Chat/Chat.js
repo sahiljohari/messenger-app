@@ -16,10 +16,7 @@ const Chat = ({ location }) => {
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [isTyping, setIsTyping] = useState(false);
-  const [typer, setTyper] = useState("");
-  const [numTypers, setNumTypers] = useState(0);
-
+  const [typingMessage, setTypingMessage] = useState("");
   const [hasError, setHasError] = useState(false);
 
   const ENDPOINT = "localhost:5000";
@@ -33,7 +30,7 @@ const Chat = ({ location }) => {
     setUserName(name);
     setChatRoom(room);
 
-    socket.emit("join", { name, room }, (error) => {
+    socket.emit("join", { name, room, isTyping: false }, (error) => {
       if (!!error) {
         setHasError(true);
       }
@@ -54,10 +51,8 @@ const Chat = ({ location }) => {
       setUsers(users);
     });
 
-    socket.on("userTyping", ({ user, typing, numTypers }) => {
-      setTyper(user);
-      setIsTyping(typing);
-      setNumTypers(numTypers);
+    socket.on("userTyping", ({ typingMessage }) => {
+      setTypingMessage(typingMessage);
     });
   }, []);
 
@@ -83,10 +78,8 @@ const Chat = ({ location }) => {
       chatRoom,
       message,
       messages,
-      typer,
-      numTypers,
-      isTyping,
       sendMessage,
+      typingMessage,
       sendTypingStatus,
     }),
     [
@@ -95,10 +88,8 @@ const Chat = ({ location }) => {
       chatRoom,
       message,
       messages,
-      typer,
-      numTypers,
-      isTyping,
       sendMessage,
+      typingMessage,
       sendTypingStatus,
     ]
   );
