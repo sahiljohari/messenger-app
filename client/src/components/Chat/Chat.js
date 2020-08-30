@@ -7,6 +7,7 @@ import { ChatProvider } from "../ChatContext/ChatContext";
 import SidePanel from "../SidePanel/SidePanel";
 import ChatContainer from "../ChatContainer/ChatContainer";
 import { clientUrls } from "../../clientUrls";
+import { API_ENDPOINT } from "../../environment";
 
 let socket;
 
@@ -19,13 +20,11 @@ const Chat = ({ location }) => {
 
   const [hasError, setHasError] = useState(false);
 
-  const ENDPOINT = "localhost:5000";
-
   useEffect(() => {
     const { name, room } = queryString.parse(location.search, {
       ignoreQueryPrefix: true,
     });
-    socket = io(ENDPOINT);
+    socket = io(API_ENDPOINT);
 
     setUserName(name);
     setChatRoom(room);
@@ -40,7 +39,7 @@ const Chat = ({ location }) => {
       socket.emit("disconnect");
       socket.off();
     };
-  }, [ENDPOINT, location.search]);
+  }, [location.search]);
 
   useEffect(() => {
     socket.on("message", ({ user, text }) => {
