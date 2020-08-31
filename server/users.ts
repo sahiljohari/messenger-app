@@ -2,12 +2,13 @@ export type User = {
   id: string;
   name: string;
   room: string;
+  isTyping: boolean;
   error?: string;
 };
 
 const users: User[] = [];
 
-export const addUser = ({ id, name, room }: User) => {
+export const addUser = ({ id, name, room, isTyping }: User) => {
   name = name.trim().toLowerCase();
   room = room.trim().toLowerCase();
 
@@ -20,9 +21,9 @@ export const addUser = ({ id, name, room }: User) => {
   if (isExistingUser) {
     return { error: "This user name has been taken" };
   }
-  users.push({ id, name, room });
+  users.push({ id, name, room, isTyping });
 
-  return { newUser: { id, name, room } };
+  return { newUser: { id, name, room, isTyping } };
 };
 
 export const removeUser = (id: string) => {
@@ -40,3 +41,13 @@ export const getUser = (id: string): User =>
 
 export const getUsersInRoom = (room: string): User[] =>
   users.filter((user) => user.room === room);
+
+export const getTypingUsers = (id: string): User[] =>
+  users.filter((user) => user.id !== id && user.isTyping === true);
+
+export const setTypingUser = (id: string, isTyping: boolean): void => {
+  let foundUser = users.findIndex((user) => user.id === id);
+  if (foundUser !== -1) {
+    users[foundUser].isTyping = isTyping;
+  }
+};
